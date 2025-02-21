@@ -15,4 +15,5 @@ public class UsersDto {
     private Integer statusCode;
     private Users user;
     private List<Users> users;
+    private String jwtToken;
 }

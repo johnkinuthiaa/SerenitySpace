@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.NonNull;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,4 +32,5 @@ public class Users {
     private String communityAnonymousUsername;
     private byte[] profilePhoto;
     private String role;
+    private LocalDateTime createdOn;
 }
