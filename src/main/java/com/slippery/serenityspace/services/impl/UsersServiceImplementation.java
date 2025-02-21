@@ -47,6 +47,9 @@ public class UsersServiceImplementation implements UsersService {
         user.setProfilePhoto(null);
         user.setCreatedOn(LocalDateTime.now());
         repository.save(user);
+        response.setMessage("User created successfully");
+        response.setUser(user);
+        response.setStatusCode(201);
         return response;
     }
 
@@ -57,7 +60,7 @@ public class UsersServiceImplementation implements UsersService {
         Optional<Users> existingUsersByEmail =repository.findByEmail(user.getEmail());
 
         if(existingUsersByEmail.isEmpty()){
-            response.setMessage("User with username "+user.getEmail()+" does not exist. Please try another email or log in ");
+            response.setMessage("User with email "+user.getEmail()+" does not exist. Please try another email or register for an account ");
             response.setStatusCode(200);
             return response;
         }
@@ -85,12 +88,32 @@ public class UsersServiceImplementation implements UsersService {
 
     @Override
     public UsersDto deleteUserById(Long userId) {
-        return null;
+        UsersDto response =new UsersDto();
+        Optional<UsersDto> existingUser =Optional.of(findUserById(userId));
+        if(existingUser.get().getStatusCode() !=200){
+            response.setMessage(existingUser.get().getMessage());
+            response.setStatusCode(existingUser.get().getStatusCode());
+            return response;
+        }
+        repository.deleteById(existingUser.get().getUser().getId());
+        response.setMessage("User deleted successfully ");
+        response.setStatusCode(204);
+        return response;
     }
 
     @Override
     public UsersDto findUserById(Long userId) {
-        return null;
+        UsersDto response =new UsersDto();
+        Optional<Users> existing =repository.findById(userId);
+        if(existing.isEmpty()){
+            response.setMessage("User with id "+userId+" not exist!");
+            response.setStatusCode(404);
+            return response;
+        }
+        response.setUser(existing.get());
+        response.setStatusCode(200);
+        response.setMessage("User with id "+userId);
+        return response;
     }
 
     @Override

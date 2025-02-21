@@ -19,9 +19,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Users {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotBlank(message = "id should not be blank")
+    @Id
     private Long id;
     @NotBlank(message = "username should not be blank")
     private String username;
