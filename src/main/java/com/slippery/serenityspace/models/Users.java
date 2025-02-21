@@ -1,9 +1,6 @@
 package com.slippery.serenityspace.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +9,8 @@ import lombok.Setter;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -32,4 +31,6 @@ public class Users {
     private byte[] profilePhoto;
     private String role;
     private LocalDateTime createdOn;
+    @OneToMany
+    private List<Journal> userJournals;
 }

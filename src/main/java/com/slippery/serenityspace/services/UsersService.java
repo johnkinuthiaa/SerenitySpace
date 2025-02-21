@@ -9,5 +9,5 @@ public interface UsersService {
     UsersDto updateUser(Long userId,Users userDetails);
     UsersDto deleteUserById(Long userId);
     UsersDto findUserById(Long userId);
-    UsersDto findAllUsers();
+    UsersDto getAllUsers();
 }

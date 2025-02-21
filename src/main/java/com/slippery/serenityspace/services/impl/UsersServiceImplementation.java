@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +48,7 @@ public class UsersServiceImplementation implements UsersService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setProfilePhoto(null);
         user.setCreatedOn(LocalDateTime.now());
+        user.setUserJournals(new ArrayList<>());
         repository.save(user);
         response.setMessage("User created successfully");
         response.setUser(user);
@@ -56,7 +59,7 @@ public class UsersServiceImplementation implements UsersService {
     @Override
     public UsersDto login(Users user) {
         UsersDto response =new UsersDto();
-//        login with email only and password
+//        login with email only and password. Get the username for authentication from the email of existing user
         Optional<Users> existingUsersByEmail =repository.findByEmail(user.getEmail());
 
         if(existingUsersByEmail.isEmpty()){
@@ -117,7 +120,18 @@ public class UsersServiceImplementation implements UsersService {
     }
 
     @Override
-    public UsersDto findAllUsers() {
-        return null;
+    public UsersDto getAllUsers() {
+        UsersDto response =new UsersDto();
+        List<Users> userList =repository.findAll();
+        if(userList.isEmpty()){
+            response.setMessage("No users present");
+            response.setStatusCode(404);
+            return response;
+        }
+        response.setUsers(userList);
+        response.setMessage("All registered users");
+        response.setStatusCode(200);
+
+        return response;
     }
 }

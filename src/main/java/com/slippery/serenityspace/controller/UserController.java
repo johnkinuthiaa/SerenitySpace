@@ -5,6 +5,7 @@ import com.slippery.serenityspace.models.Users;
 import com.slippery.serenityspace.services.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,5 +33,9 @@ public class UserController {
     @GetMapping("/get/{userId}")
     public ResponseEntity<UsersDto> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(service.findUserById(userId));
+    }
+    @GetMapping("/all-users")
+    public ResponseEntity<UsersDto> findAllUsers() {
+        return ResponseEntity.ok(service.getAllUsers());
     }
 }
