@@ -1,4 +1,7 @@
 package com.slippery.serenityspace.repository;
 
-public interface ProfessionalsRepository {
+import com.slippery.serenityspace.models.Professionals;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProfessionalsRepository extends JpaRepository<Professionals,Long> {
 }
