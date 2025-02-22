@@ -33,4 +33,6 @@ public class Users {
     private LocalDateTime createdOn;
     @OneToMany
     private List<Journal> userJournals;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Mood> userMoods;
 }

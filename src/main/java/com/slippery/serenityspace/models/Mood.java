@@ -1,5 +1,6 @@
 package com.slippery.serenityspace.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,7 @@ public class Mood {
     private String mood;
     @Lob
     private List<String> activitiesDone;
+    @ManyToOne
+    @JsonIgnore
+    private Users user;
 }
