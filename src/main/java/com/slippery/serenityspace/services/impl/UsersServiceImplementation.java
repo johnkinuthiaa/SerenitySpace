@@ -10,7 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +133,27 @@ public class UsersServiceImplementation implements UsersService {
         response.setUsers(userList);
         response.setMessage("All registered users");
         response.setStatusCode(200);
+
+        return response;
+    }
+
+    @Override
+    public UsersDto uploadProfilePhoto(Long userId, MultipartFile image) throws IOException {
+        UsersDto response =new UsersDto();
+        Optional<Users> existing =repository.findById(userId);
+        if(existing.isEmpty()){
+            response.setMessage("User with id "+userId+" not exist!");
+            response.setStatusCode(404);
+            return response;
+        }
+        try{
+            existing.get().setProfilePhoto(image.getBytes());
+            repository.save(existing.get());
+            response.setMessage("Profile photo uploaded!");
+            response.setStatusCode(200);
+        }catch (IOException e){
+            throw new IOException(e.getMessage());
+        }
 
         return response;
     }

@@ -28,6 +28,7 @@ public class Users {
     @NotBlank(message = "email should not be blank")
     private String email;
     private String communityAnonymousUsername;
+    @Lob
     private byte[] profilePhoto;
     private String role;
     private LocalDateTime createdOn;
