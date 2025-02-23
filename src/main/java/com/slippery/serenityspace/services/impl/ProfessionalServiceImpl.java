@@ -7,6 +7,7 @@ import com.slippery.serenityspace.services.ProfessionalsService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -86,6 +87,17 @@ public class ProfessionalServiceImpl implements ProfessionalsService {
 
     @Override
     public ProfessionalInfoDto deleteAllProfessionalInfos() {
-        return null;
+        ProfessionalInfoDto response =new ProfessionalInfoDto();
+        var professionalsList =findAllProfessionalInfos();
+        if(Objects.equals(professionalsList.getMessage(), "Info list is empty")){
+            response.setMessage("cannot delete information because "+professionalsList.getMessage());
+            response.setStatusCode(200);
+            response.setProfessionalsList(new ArrayList<>());
+            return response;
+        }
+        repository.deleteAll();
+        response.setStatusCode(200);
+        response.setMessage("All professional information deleted successfully");
+        return response;
     }
 }
