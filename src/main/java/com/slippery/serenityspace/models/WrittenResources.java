@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class WrittenResources {
+    /**
+     * similar to blogs.Articles about self-improvement and better mental health
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
